@@ -1,1 +1,3 @@
-.vs/*
+.vs/
+ModelFilter.Persistence/obj/
+ModelFilter.Api/obj/
