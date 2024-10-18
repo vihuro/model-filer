@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ModelFilter.Api.props" />
+</Project>

@@ -1,0 +1,11 @@
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\bin\Debug\net8.0\ModelFilter.Application.deps.json
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\bin\Debug\net8.0\ModelFilter.Application.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\bin\Debug\net8.0\ModelFilter.Application.pdb
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\ModelFilter.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\ModelFilter.Application.AssemblyInfoInputs.cache
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\ModelFilter.Application.AssemblyInfo.cs
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\ModelFilter.Application.csproj.CoreCompileInputs.cache
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\ModelFilter.Application.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\refint\ModelFilter.Application.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\ModelFilter.Application.pdb
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Application\obj\Debug\net8.0\ref\ModelFilter.Application.dll

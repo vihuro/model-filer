@@ -1,0 +1,15 @@
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.AssemblyInfoInputs.cache
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.AssemblyInfo.cs
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.csproj.CoreCompileInputs.cache
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\bin\Debug\net8.0\ModelFilter.Persistence.deps.json
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\bin\Debug\net8.0\ModelFilter.Persistence.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\bin\Debug\net8.0\ModelFilter.Persistence.pdb
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\bin\Debug\net8.0\ModelFilter.Domain.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\bin\Debug\net8.0\ModelFilter.Domain.pdb
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.csproj.AssemblyReference.cache
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFil.341086F5.Up2Date
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\refint\ModelFilter.Persistence.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.pdb
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ref\ModelFilter.Persistence.dll
