@@ -23,41 +23,51 @@ namespace ModelFilter.Persistence.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<ReturnDefault<T>> GetAsync(FilterBase? filters, int maxPerPage = 100)
+        public async Task<ReturnDefault<T>> GetAsync(FilterBase? filters, CancellationToken cancellationToken, int maxPerPage = 100)
         {
-
 
             var expression = _filterDynamic.FromFilterList<T>(filters);
 
-            var query = appDbContext.Set<T>().Where(expression)
-                                             .Skip((filters.CurrentPage - 1) * filters.MaxPerPage)
-                                             .Take(filters.MaxPerPage <= maxPerPage ? filters.MaxPerPage : maxPerPage)
-                                             .OrderBy(x => x).AsQueryable();
+            var maxPerPageUsing = filters.MaxPerPage <= maxPerPage ? filters.MaxPerPage : maxPerPage;
+
+            var query = appDbContext.Set<T>().Where(expression);
 
             query = ApplyOrder((IOrderedQueryable<T>)query, filters.MultiSort);
 
-            var data = await query.ToListAsync();
+            query = query.Skip((filters.CurrentPage - 1) * filters.MaxPerPage)
+                         .Take(maxPerPageUsing);
+
+            var data = await query.ToListAsync(cancellationToken);
 
             var totalItems = await appDbContext.Set<T>().Where(expression)
-                                                        .CountAsync();
+                                                        .CountAsync(cancellationToken);
+
+            var totalPages = Math.Ceiling((decimal)totalItems / maxPerPageUsing);
 
             var result = new ReturnDefault<T>()
             {
                 CurrentPage = filters.CurrentPage,
                 TotalItems = totalItems,
-                MaxPerPage = filters.MaxPerPage,
-                TotalPages = totalItems < filters.MaxPerPage && data.Count > 0 ? 1 : totalItems / filters.MaxPerPage,
+                MaxPerPage = maxPerPageUsing,
+                TotalPages = (int)totalPages,
                 DataResult = data
             };
 
             return result;
 
         }
-        private IOrderedQueryable<T> ApplyOrder<T>(IOrderedQueryable<T> query, List<MultiSort> multiSorts)
+        private IQueryable<T> ApplyOrder(IQueryable<T> query, List<MultiSort> multiSorts)
         {
+            if (multiSorts?.Count < 1) return query;
+
             var functionsOnQueryable = typeof(Queryable).GetMethods();
-            var thenBy = functionsOnQueryable.Where(x => x.Name == "ThenBy" && x.GetParameters().Length == 2).FirstOrDefault();
-            var thenByDescending = functionsOnQueryable.Where(x => x.Name == "ThenByDescending" && x.GetParameters().Length == 2).FirstOrDefault();
+            var OrderBy = functionsOnQueryable.First(x => x.Name == "OrderBy" && x.GetParameters().Length == 2);
+            var OrderByDescending = functionsOnQueryable.First(x => x.Name == "OrderByDescending" && x.GetParameters().Length == 2);
+            var thenBy = functionsOnQueryable.First(x => x.Name == "ThenBy" && x.GetParameters().Length == 2);
+            var thenByDescending = functionsOnQueryable.First(x => x.Name == "ThenByDescending" && x.GetParameters().Length == 2);
+
+            IOrderedQueryable<T> orderedQuery = null;
+
             foreach (var item in multiSorts)
             {
                 var param = Expression.Parameter(typeof(T), "x"); // Parâmetro da expressão
@@ -66,23 +76,31 @@ namespace ModelFilter.Persistence.Repository
 
                 var genericThenBy = thenBy.MakeGenericMethod(typeof(T), property.Type);
                 var genericThenByDescending = thenByDescending.MakeGenericMethod(typeof(T), property.Type);
+                var genericOrderBy = OrderBy.MakeGenericMethod(typeof(T), property.Type);
+                var genericOrderByDesceding = OrderByDescending.MakeGenericMethod(typeof(T), property.Type);
 
                 // Verificação do tipo de ordenação
                 if (item.Value.Equals(EOrderByType.Asc.ToString(), StringComparison.OrdinalIgnoreCase))
                 {
-                    query = (IOrderedQueryable<T>)genericThenBy.Invoke(null, new object[] { query, keySelector });
+                    orderedQuery = (orderedQuery == null)
+                        ? (IOrderedQueryable<T>)genericOrderBy.Invoke(null, new object[] { query, keySelector })
+                        : (IOrderedQueryable<T>)genericThenBy.Invoke(null, new object[] { orderedQuery, keySelector });
                 }
                 else if (item.Value.Equals(EOrderByType.Desc.ToString(), StringComparison.OrdinalIgnoreCase))
                 {
-                    query = (IOrderedQueryable<T>)genericThenByDescending.Invoke(null, new object[] { query, keySelector });
+                    orderedQuery = (orderedQuery == null)
+                        ? (IOrderedQueryable<T>)genericOrderByDesceding.Invoke(null, new object[] { query, keySelector })
+                        : (IOrderedQueryable<T>)genericThenByDescending.Invoke(null, new object[] { orderedQuery, keySelector });
                 }
             }
-            return query;
+
+            return orderedQuery ?? query.OrderBy(x => x); // Retorna a query ordenada ou a original se nenhuma ordenação foi aplicada
         }
 
         public void Insert(T entity)
         {
             entity.DateCreated = DateTime.UtcNow;
+            entity.DateUpdated = DateTime.UtcNow;
             appDbContext.Add(entity);
         }
 
