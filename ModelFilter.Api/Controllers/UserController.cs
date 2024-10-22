@@ -1,29 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ModelFilter.Domain.Interface;
-using ModelFilter.Domain.Utils;
-using ModelFilter.Domain.Utils.Filters;
-using Newtonsoft.Json;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using ModelFilter.Api.Utils;
+using ModelFilter.Application.UseCases.User;
+using ModelFilter.Application.UseCases.User.GetUser;
+using ModelFilter.Domain.Models;
 
 namespace ModelFilter.Api.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
-        private readonly IUserRepository _userRepository;
-
-        public UserController(IUserRepository userRepository)
+        public UserController(IMediator mediator) : base(mediator)
         {
-            _userRepository = userRepository;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllUsers(string? filters)
+        public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> GetAllUsers(string? filters, CancellationToken cancellationToken)
         {
             try
             {
-                var result = await _userRepository.GetAsync(JsonConvert.DeserializeObject<FilterBaseDto>(filters));
-                return Ok(result);
+                var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
+                return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
+
             }
             catch (Exception ex)
             {

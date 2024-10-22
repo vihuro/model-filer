@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ModelFilter.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27ecff7277da2e433ff5e10a3c29bbd7559594b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eff516d931110e5657e672fe225baf52657d0409")]
 [assembly: System.Reflection.AssemblyProductAttribute("ModelFilter.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ModelFilter.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

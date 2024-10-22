@@ -2,7 +2,7 @@
 using ModelFilter.Domain.Utils.Filters;
 using System.Linq.Expressions;
 
-namespace ModelFilter.Persistence.Repository
+namespace ModelFilter.Persistence.Utils
 {
     public class FilterDynamic : IFilterDynamic
     {
@@ -13,29 +13,17 @@ namespace ModelFilter.Persistence.Repository
             _filterInterpreterFactory = filterInterpreterFactory;
         }
 
-        public Expression<Func<TType, bool>> FromFilterList<TType>(FilterBaseDto filter)
+        public Expression<Func<TType, bool>> FromFilterList<TType>(FilterBase filter)
         {
             var expression = filter.Filters.Select(x =>
             {
                 var interpreter = _filterInterpreterFactory.Create<TType>(x);
-                var resolveInterpreter = ResolveNextInterpreter(interpreter, x);
 
-                return resolveInterpreter;
+                return interpreter;
             });
             var aggregate = expression.Aggregate((curr, next) => curr.And(next));
 
             return aggregate.Interpret();
-        }
-        private IFilterTypeInterpreter<TType> ResolveNextInterpreter<TType>(IFilterTypeInterpreter<TType> interpreter, Filter filtroItem)
-        {
-
-            //if (filtroItem.Or != null)
-            //    return interpreter.Or(_factory.Create<TType>(filtroItem.Or));
-
-            //if (filtroItem.And != null)
-            //    return interpreter.And(_factory.Create<TType>(filtroItem.And));
-
-            return interpreter;
         }
     }
 }

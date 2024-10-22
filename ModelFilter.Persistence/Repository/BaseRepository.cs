@@ -3,7 +3,6 @@ using ModelFilter.Domain.Interface;
 using ModelFilter.Domain.Models;
 using ModelFilter.Domain.Utils.Filters;
 using ModelFilter.Persistence.Context;
-using System.Linq;
 
 namespace ModelFilter.Persistence.Repository
 {
@@ -23,13 +22,14 @@ namespace ModelFilter.Persistence.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<ReturnDefault<T>> GetAsync(FilterBaseDto filters)
+        public async Task<ReturnDefault<T>> GetAsync(FilterBase? filters, int maxPerPage = 100)
         {
             var expression = _filterDynamic.FromFilterList<T>(filters);
 
             var query = appDbContext.Set<T>().Where(expression)
                                              .Skip((filters.CurrentPage - 1) * filters.MaxPerPage)
-                                             .Take(filters.MaxPerPage).OrderBy(x => x).AsQueryable();
+                                             .Take(filters.MaxPerPage <= maxPerPage ? filters.MaxPerPage : maxPerPage)
+                                             .OrderBy(x => x).AsQueryable();
 
             if (filters.MultiSort?.Count > 0)
             {
@@ -41,7 +41,7 @@ namespace ModelFilter.Persistence.Repository
             var data = await query.ToListAsync();
 
             var totalItems = await appDbContext.Set<T>().Where(expression)
-                                 .CountAsync();
+                                  .CountAsync();
 
             var result = new ReturnDefault<T>()
             {

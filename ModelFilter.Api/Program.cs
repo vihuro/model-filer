@@ -2,6 +2,7 @@ using ModelFilter.Domain.Interface;
 using ModelFilter.Domain.Utils.Filters;
 using ModelFilter.Persistence;
 using ModelFilter.Persistence.Repository;
+using ModelFilter.Persistence.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 

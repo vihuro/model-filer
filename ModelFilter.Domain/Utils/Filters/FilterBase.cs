@@ -1,10 +1,8 @@
 ﻿namespace ModelFilter.Domain.Utils.Filters
 {
-    public class FilterBaseDto
+    public class FilterBase
     {
         public int CurrentPage { get; set; } = 1;
-        public int TotalPages { get; set; }
-        public int TotalItems { get; set; }
         public int MaxPerPage { get; set; } = 100;
         public List<Filter> Filters { get; set; }
         public List<MultiSort> MultiSort { get; set; }

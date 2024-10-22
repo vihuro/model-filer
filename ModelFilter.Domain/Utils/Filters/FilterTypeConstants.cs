@@ -1,4 +1,4 @@
-﻿namespace ModelFilter.Domain.Models
+﻿namespace ModelFilter.Domain.Utils.Filters
 {
     public class FilterTypeConstants
     {
