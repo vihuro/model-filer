@@ -5,6 +5,6 @@ namespace ModelFilter.Domain.Interface
 {
     public interface IFilterDynamic
     {
-        Expression<Func<TType, bool>> FromFilterList<TType>(FilterBaseDto filter);
+        Expression<Func<TType, bool>> FromFilterList<TType>(FilterBase filter);
     }
 }

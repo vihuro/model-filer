@@ -5,7 +5,7 @@ namespace ModelFilter.Domain.Interface
 {
     public interface IBaseRepository<T> where T : BaseModel
     {
-        Task<ReturnDefault<T>> GetAsync(FilterBaseDto? filters);
+        Task<ReturnDefault<T>> GetAsync(FilterBase? filters, int maxPerPage = 100);
         void Insert(T entity);
         void Upate(T entity);
         void Delete(T entity);
