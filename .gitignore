@@ -1,3 +1,7 @@
 .vs/
-ModelFilter.Persistence/obj/
-ModelFilter.Api/obj/
+ModelFilter.Persistence/obj
+ModelFilter.Persistence/bin
+ModelFilter.Domain/bin
+ModelFilter.Domain/obj
+ModelFilter.Api/obj
+ModelFilter.Api/bin

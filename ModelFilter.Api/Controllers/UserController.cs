@@ -18,7 +18,7 @@ namespace ModelFilter.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllUsers(string filters)
+        public async Task<ActionResult> GetAllUsers(string? filters)
         {
             try
             {

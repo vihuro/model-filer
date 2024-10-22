@@ -13,3 +13,4 @@ C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\
 C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\refint\ModelFilter.Persistence.dll
 C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.pdb
 C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ref\ModelFilter.Persistence.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Persistence\obj\Debug\net8.0\ModelFilter.Persistence.sourcelink.json

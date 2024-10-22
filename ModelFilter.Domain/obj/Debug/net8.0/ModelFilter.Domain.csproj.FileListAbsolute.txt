@@ -9,3 +9,4 @@ C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Domain\obj\Debug\net8.
 C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Domain\obj\Debug\net8.0\refint\ModelFilter.Domain.dll
 C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Domain\obj\Debug\net8.0\ModelFilter.Domain.pdb
 C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Domain\obj\Debug\net8.0\ref\ModelFilter.Domain.dll
+C:\Users\Vitor Hugo\source\repos\model-filter\ModelFilter.Domain\obj\Debug\net8.0\ModelFilter.Domain.sourcelink.json
