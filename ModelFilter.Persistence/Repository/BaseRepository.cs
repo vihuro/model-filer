@@ -23,7 +23,7 @@ namespace ModelFilter.Persistence.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<ReturnDefault<T>> GetAsync(FilterBase? filters, int maxPerPage = 100)
+        public async Task<ReturnDefault<T>> GetAsync(FilterBase? filters, CancellationToken cancellationToken, int maxPerPage = 100)
         {
 
             var expression = _filterDynamic.FromFilterList<T>(filters);
@@ -37,10 +37,10 @@ namespace ModelFilter.Persistence.Repository
             query = query.Skip((filters.CurrentPage - 1) * filters.MaxPerPage)
                          .Take(maxPerPageUsing);
 
-            var data = await query.ToListAsync();
+            var data = await query.ToListAsync(cancellationToken);
 
             var totalItems = await appDbContext.Set<T>().Where(expression)
-                                                        .CountAsync();
+                                                        .CountAsync(cancellationToken);
 
             var totalPages = Math.Ceiling((decimal)totalItems / maxPerPageUsing);
 

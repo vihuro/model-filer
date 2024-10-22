@@ -17,7 +17,7 @@ namespace ModelFilter.Application.UseCases.User.GetUser
 
         public async Task<ReturnDefault<UserReturnDefault>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
-            var userReponse = await _userRepository.GetAsync(request.Filters, 100);
+            var userReponse = await _userRepository.GetAsync(request.Filters, cancellationToken, 10);
             var response = new ReturnDefault<UserReturnDefault>()
             {
                 CurrentPage = userReponse.CurrentPage,
