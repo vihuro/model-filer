@@ -5,7 +5,7 @@
         public int CurrentPage { get; set; } = 1;
         public int MaxPerPage { get; set; } = 100;
         public List<Filter> Filters { get; set; }
-        public List<MultiSort> MultiSort { get; set; }
+        public List<MultiSort> MultiSort { get; set; } = [];
 
     }
     public class Filter

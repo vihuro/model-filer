@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ModelFilter.Api.Utils;
 using ModelFilter.Application.UseCases.User;
+using ModelFilter.Application.UseCases.User.CreateUser;
 using ModelFilter.Application.UseCases.User.GetUser;
 using ModelFilter.Domain.Models;
 
@@ -48,6 +49,20 @@ namespace ModelFilter.Api.Controllers
                 var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
                 return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
 
+            }
+            catch (Exception ex)
+            {
+
+                return CustomReponseError(ex.Message);
+            }
+        }
+        [HttpPost]
+        public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> CreateUser([FromBody] CreateUserRequest request, 
+                                                                                     CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await CustomCreateResponse(request, cancellationToken);
             }
             catch (Exception ex)
             {

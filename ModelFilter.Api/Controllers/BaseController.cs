@@ -21,7 +21,14 @@ namespace ModelFilter.Api.Controllers
 
             return Ok(response);
         }
-        protected ActionResult CustomReponseError()
+        protected async Task<ActionResult> CustomCreateResponse<T>(T mediatorRequest,
+                                                     CancellationToken cancellationToken)
+        {
+            var response = await _mediator.Send(mediatorRequest, cancellationToken);
+
+            return Created("", response);
+        }
+        protected ActionResult CustomResponseError()
         {
             return BadRequest();
         }

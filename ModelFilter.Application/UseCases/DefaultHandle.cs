@@ -13,9 +13,9 @@ namespace ModelFilter.Application.UseCases
             _mediator = mediator;
             _unitOfWork = unitOfWork;
         }
-        protected void Commit(CancellationToken cancellationToken)
+        protected async Task Commit(CancellationToken cancellationToken)
         {
-            _unitOfWork.Commit(cancellationToken);
+            await _unitOfWork.Commit(cancellationToken);
         }
     }
 }
