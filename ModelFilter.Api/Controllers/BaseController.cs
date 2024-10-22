@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ModelFilter.Application.UseCases.User;
+using ModelFilter.Domain.Models;
 
 namespace ModelFilter.Api.Controllers
 {
@@ -25,7 +27,11 @@ namespace ModelFilter.Api.Controllers
         }
         protected ActionResult CustomReponseError(string error)
         {
-            return BadRequest(error);
+            return BadRequest(new ReturnDefault<UserReturnDefault>()
+            {
+                Sucess = false,
+                Erros = new List<string> { error }
+            });
         }
     }
 }

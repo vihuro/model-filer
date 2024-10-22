@@ -1,8 +1,6 @@
-using ModelFilter.Domain.Interface;
-using ModelFilter.Domain.Utils.Filters;
+using ModelFilter.Api.Configuration;
+using ModelFilter.Application;
 using ModelFilter.Persistence;
-using ModelFilter.Persistence.Repository;
-using ModelFilter.Persistence.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,12 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureSwaggerApp();
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IFilterDynamic, FilterDynamic>();
-builder.Services.AddScoped<IFilterInterpreterFactory, FilterInterpreterFactory>();
+builder.Services.ConfigureApplicationApp();
 
 var app = builder.Build();
 

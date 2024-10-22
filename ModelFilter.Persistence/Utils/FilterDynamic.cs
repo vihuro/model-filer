@@ -15,6 +15,8 @@ namespace ModelFilter.Persistence.Utils
 
         public Expression<Func<TType, bool>> FromFilterList<TType>(FilterBase filter)
         {
+            if (filter.Filters == null || filter.Filters.Count < 1) 
+                return _ => true;
             var expression = filter.Filters.Select(x =>
             {
                 var interpreter = _filterInterpreterFactory.Create<TType>(x);

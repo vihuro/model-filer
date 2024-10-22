@@ -15,6 +15,31 @@ namespace ModelFilter.Api.Controllers
         {
         }
 
+        /// <summary>
+        /// Buscar todos usuários!
+        /// </summary>
+        /// <param name="filters">
+        /// Um objeto JSON que representa os filtros. Exemplo:
+        /// {
+        ///     "currentPage": 1,
+        ///     "maxPerPage": 100,
+        ///     "filters": [
+        ///         {
+        ///             "field": "name",
+        ///             "value": "John Doe",
+        ///             "operation": "equals"
+        ///         }
+        ///     ],
+        ///     "multiSort": [
+        ///         {
+        ///             "field": "dateCreated",
+        ///             "value": "asc"
+        ///         }
+        ///     ]
+        /// }
+        /// </param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> GetAllUsers(string? filters, CancellationToken cancellationToken)
         {
@@ -27,7 +52,7 @@ namespace ModelFilter.Api.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return CustomReponseError(ex.Message);
             }
         }
     }
