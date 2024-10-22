@@ -8,19 +8,26 @@ using ModelFilter.Domain.Models;
 
 namespace ModelFilter.Api.Controllers
 {
+    /// <summary>
+    /// Controller of the Users
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class UserController : BaseController
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mediator"></param>
         public UserController(IMediator mediator) : base(mediator)
         {
         }
 
         /// <summary>
-        /// Buscar todos usuários!
+        /// Get all Users
         /// </summary>
         /// <param name="filters">
-        /// Um objeto JSON que representa os filtros. Exemplo:
+        /// A object json. Example: 
         /// {
         ///     "currentPage": 1,
         ///     "maxPerPage": 100,
@@ -56,6 +63,12 @@ namespace ModelFilter.Api.Controllers
                 return CustomReponseError(ex.Message);
             }
         }
+        /// <summary>
+        /// Create a user!
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> CreateUser([FromBody] CreateUserRequest request, 
                                                                                      CancellationToken cancellationToken)
