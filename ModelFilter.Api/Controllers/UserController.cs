@@ -4,6 +4,7 @@ using ModelFilter.Api.Utils;
 using ModelFilter.Application.UseCases.User;
 using ModelFilter.Application.UseCases.User.CreateUser;
 using ModelFilter.Application.UseCases.User.GetUser;
+using ModelFilter.Domain.Interface;
 using ModelFilter.Domain.Models;
 
 namespace ModelFilter.Api.Controllers
@@ -19,7 +20,7 @@ namespace ModelFilter.Api.Controllers
         /// Constructor
         /// </summary>
         /// <param name="mediator"></param>
-        public UserController(IMediator mediator) : base(mediator)
+        public UserController(IMediator mediator, ICustomNotification notification) : base(mediator, notification)
         {
         }
 
@@ -51,17 +52,19 @@ namespace ModelFilter.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> GetAllUsers(string? filters, CancellationToken cancellationToken)
         {
-            try
-            {
-                var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
-                return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
+            var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
+            return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
+            //try
+            //{
+            //    var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
+            //    return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
 
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                return CustomReponseError(ex.Message);
-            }
+            //    return CustomReponseError(ex.Message);
+            //}
         }
         /// <summary>
         /// Create a user!
@@ -70,7 +73,7 @@ namespace ModelFilter.Api.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> CreateUser([FromBody] CreateUserRequest request, 
+        public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> CreateUser([FromBody] CreateUserRequest request,
                                                                                      CancellationToken cancellationToken)
         {
             try
@@ -80,7 +83,7 @@ namespace ModelFilter.Api.Controllers
             catch (Exception ex)
             {
 
-                return CustomReponseError(ex.Message);
+                return CustomResponseError(ex.Message);
             }
         }
     }

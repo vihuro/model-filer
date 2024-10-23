@@ -10,7 +10,8 @@ namespace ModelFilter.Application.UseCases.User.GetUser
         private readonly IUserRepository _userRepository;
         public GetUserHandle(IMediator mediator,
                              IUnitOfWork unitOfWork,
-                             IUserRepository userRepository) : base(mediator, unitOfWork)
+                             IUserRepository userRepository,
+                             ICustomNotification notification) : base(mediator, unitOfWork, notification)
         {
             _userRepository = userRepository;
         }

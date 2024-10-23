@@ -1,15 +1,19 @@
 ﻿using MediatR;
+using ModelFilter.Application.Utils;
 using ModelFilter.Domain.Interface;
 using ModelFilter.Domain.Models;
+using ModelFilter.Domain.Utils;
 
 namespace ModelFilter.Application.UseCases.User.CreateUser
 {
     public class CreateUserHandle : DefaultHandle, IRequestHandler<CreateUserRequest, ReturnDefault<UserReturnDefault>>
     {
         private readonly IUserRepository _userRepository;
+
         public CreateUserHandle(IMediator mediator,
                                 IUnitOfWork unitOfWork,
-                                IUserRepository userRepository) : base(mediator, unitOfWork)
+                                IUserRepository userRepository,
+                                ICustomNotification notification) : base(mediator, unitOfWork, notification)
         {
             _userRepository = userRepository;
         }
@@ -22,6 +26,10 @@ namespace ModelFilter.Application.UseCases.User.CreateUser
                 UserName = request.UserName,
 
             };
+            EntityIsValid(entity);
+
+            if (!OperationIsValid()) return null;
+
             _userRepository.Insert(entity);
 
             await Commit(cancellationToken);
