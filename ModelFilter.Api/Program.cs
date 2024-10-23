@@ -16,6 +16,8 @@ builder.Services.ConfigureApplicationApp();
 
 var app = builder.Build();
 
+app.UseMiddleware(typeof(ErrorHandleMiddlewares));
+
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
