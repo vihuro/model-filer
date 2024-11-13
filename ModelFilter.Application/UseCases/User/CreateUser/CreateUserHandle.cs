@@ -1,8 +1,6 @@
 ﻿using MediatR;
-using ModelFilter.Application.Utils;
 using ModelFilter.Domain.Interface;
 using ModelFilter.Domain.Models;
-using ModelFilter.Domain.Utils;
 
 namespace ModelFilter.Application.UseCases.User.CreateUser
 {
@@ -33,6 +31,7 @@ namespace ModelFilter.Application.UseCases.User.CreateUser
             _userRepository.Insert(entity);
 
             await Commit(cancellationToken);
+
             var response = new ReturnDefault<UserReturnDefault>
             {
                 CurrentPage = 1,

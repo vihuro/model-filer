@@ -10,7 +10,7 @@ namespace ModelFilter.Api.Utils
             if (valueFilter is null) return new FilterBase()
             {
                 CurrentPage = 1,
-                Filters = new List<Filter>(),
+                Filters = [],
                 MaxPerPage = 10,
             };
             return JsonConvert.DeserializeObject<FilterBase>(valueFilter);

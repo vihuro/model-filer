@@ -53,18 +53,8 @@ namespace ModelFilter.Api.Controllers
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> GetAllUsers(string? filters, CancellationToken cancellationToken)
         {
             var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
+
             return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
-            //try
-            //{
-            //    var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
-            //    return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
-
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    return CustomReponseError(ex.Message);
-            //}
         }
         /// <summary>
         /// Create a user!
@@ -76,15 +66,7 @@ namespace ModelFilter.Api.Controllers
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> CreateUser([FromBody] CreateUserRequest request,
                                                                                      CancellationToken cancellationToken)
         {
-            try
-            {
-                return await CustomCreateResponse(request, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-
-                return CustomResponseError(ex.Message);
-            }
+            return await CustomCreateResponse(request, cancellationToken);
         }
     }
 }

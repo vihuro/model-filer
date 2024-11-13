@@ -5,7 +5,7 @@ using ModelFilter.Domain.Models;
 namespace ModelFilter.Application.UseCases.User.GetUser
 {
     public class GetUserHandle : DefaultHandle,
-        IRequestHandler<GetUserRequest, ReturnDefault<UserReturnDefault>>
+                 IRequestHandler<GetUserRequest, ReturnDefault<UserReturnDefault>>
     {
         private readonly IUserRepository _userRepository;
         public GetUserHandle(IMediator mediator,
@@ -19,6 +19,7 @@ namespace ModelFilter.Application.UseCases.User.GetUser
         public async Task<ReturnDefault<UserReturnDefault>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
             var userReponse = await _userRepository.GetAsync(request.Filters, cancellationToken, 10);
+
             var response = new ReturnDefault<UserReturnDefault>()
             {
                 CurrentPage = userReponse.CurrentPage,
