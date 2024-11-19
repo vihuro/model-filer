@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using ModelFilter.Domain.Interface;
 using ModelFilter.Domain.Models;
 
@@ -11,7 +12,8 @@ namespace ModelFilter.Application.UseCases.User.GetUser
         public GetUserHandle(IMediator mediator,
                              IUnitOfWork unitOfWork,
                              IUserRepository userRepository,
-                             ICustomNotification notification) : base(mediator, unitOfWork, notification)
+                             ICustomNotification notification,
+                             IMapper mapper) : base(mediator, unitOfWork, notification, mapper)
         {
             _userRepository = userRepository;
         }
@@ -20,20 +22,8 @@ namespace ModelFilter.Application.UseCases.User.GetUser
         {
             var userReponse = await _userRepository.GetAsync(request.Filters, cancellationToken, 10);
 
-            var response = new ReturnDefault<UserReturnDefault>()
-            {
-                CurrentPage = userReponse.CurrentPage,
-                TotalItems = userReponse.TotalItems,
-                MaxPerPage = userReponse.MaxPerPage,
-                TotalPages = userReponse.TotalPages,
-                DataResult = userReponse.DataResult.Select(x => new UserReturnDefault
-                {
-                    DateCreated = x.DateCreated,
-                    DateUpdated = x.DateUpdated,
-                    Id = x.Id,
-                    UserName = x.UserName,
-                }).ToList()
-            };
+            var response = _mapper.Map<ReturnDefault<UserReturnDefault>>(userReponse);
+
             return response;
         }
     }

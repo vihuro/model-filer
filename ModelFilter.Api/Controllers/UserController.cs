@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ModelFilter.Api.Utils;
+using ModelFilter.Api.Utils.Authorize;
 using ModelFilter.Application.UseCases.User;
 using ModelFilter.Application.UseCases.User.CreateUser;
 using ModelFilter.Application.UseCases.User.GetUser;
@@ -50,11 +51,12 @@ namespace ModelFilter.Api.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
+        [ClaimsAuthorize("storage.sgb.write1, storage.sgb.read1")]
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> GetAllUsers(string? filters, CancellationToken cancellationToken)
         {
             var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
 
-            return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
+            return await CustomResponse(new GetUserRequest(filterDefault), new UserReturnDefault(), cancellationToken);
         }
         /// <summary>
         /// Create a user!

@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ModelFilter.Application.Interface;
+using ModelFilter.Application.UseCases.Token;
 using System.Reflection;
 
 namespace ModelFilter.Application
@@ -9,6 +11,10 @@ namespace ModelFilter.Application
         {
             services.AddMediatR(md =>
                         md.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddScoped<IJwtService, GenerateTokenHandle>();
         }
     }
 }
