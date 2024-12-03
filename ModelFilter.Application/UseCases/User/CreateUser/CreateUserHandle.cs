@@ -11,11 +11,11 @@ namespace ModelFilter.Application.UseCases.User.CreateUser
 
         public CreateUserHandle(IMediator mediator,
                                 IUnitOfWork unitOfWork,
-                                IUserRepository userRepository,
                                 ICustomNotification notification,
+                                IUserRepository userRepository,
                                 IMapper mapper) : base(mediator, unitOfWork, notification, mapper)
         {
-            _userRepository = userRepository;
+            _userRepository = userRepository ;
         }
 
         public async Task<ReturnDefault<UserReturnDefault>> Handle(CreateUserRequest request, CancellationToken cancellationToken)

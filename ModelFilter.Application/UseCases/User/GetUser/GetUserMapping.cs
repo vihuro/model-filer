@@ -17,6 +17,7 @@ namespace ModelFilter.Application.UseCases.User.GetUser
                 {
                     DateCreated = x.DateCreated,
                     UserName = x.UserName,
+                    Name = x.Name,
                     DateUpdated = x.DateUpdated,
                     Id = x.Id
                 })));

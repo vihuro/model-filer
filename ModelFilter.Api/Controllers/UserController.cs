@@ -51,7 +51,7 @@ namespace ModelFilter.Api.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [ClaimsAuthorize("storage.sgb.write1, storage.sgb.read1")]
+        [ClaimsAuthorize("storage.sgb.write, storage.sgb.read")]
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> GetAllUsers(string? filters, CancellationToken cancellationToken)
         {
             var filterDefault = ConvertFilter.ConvertFilterDefault(filters);

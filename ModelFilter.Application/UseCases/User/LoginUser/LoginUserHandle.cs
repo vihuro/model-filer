@@ -27,9 +27,15 @@ namespace ModelFilter.Application.UseCases.User.LoginUser
         {
             var user = await _userRepository.GetByUserName(request.UserName, cancellationToken);
 
+
+            if (user is null)
+            {
+                Notify("Invalid username or password, please reenter them.");
+                return null;
+            }
             var passwordIsValid = Verify(request.Password, user.Password);
 
-            if (user is null || !passwordIsValid)
+            if (!passwordIsValid)
             {
                 Notify("Invalid username or password, please reenter them.");
                 return null;

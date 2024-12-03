@@ -10,6 +10,7 @@ namespace ModelFilter.Application.UseCases.User.CreateUser
         {
             CreateMap<CreateUserRequest, UserModel>()
                 .ForMember(x => x.UserName, map => map.MapFrom(src => src.UserName))
+                .ForMember(x => x.Name, map => map.MapFrom(src => src.Name))
                 .ForMember(x => x.Password, map => map.MapFrom(src => BC.HashPassword(src.Password)));
         }
     }

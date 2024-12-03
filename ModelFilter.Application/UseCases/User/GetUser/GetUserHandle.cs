@@ -9,18 +9,23 @@ namespace ModelFilter.Application.UseCases.User.GetUser
                  IRequestHandler<GetUserRequest, ReturnDefault<UserReturnDefault>>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserRepositoryDapper _userRepositoryDaaper;
+
         public GetUserHandle(IMediator mediator,
                              IUnitOfWork unitOfWork,
-                             IUserRepository userRepository,
                              ICustomNotification notification,
-                             IMapper mapper) : base(mediator, unitOfWork, notification, mapper)
+                             IMapper mapper,
+                             IUserRepository userRepository,
+                             IUserRepositoryDapper userRepositoryDaaper) : base(mediator, unitOfWork, notification, mapper)
         {
             _userRepository = userRepository;
+            _userRepositoryDaaper = userRepositoryDaaper;
         }
 
         public async Task<ReturnDefault<UserReturnDefault>> Handle(GetUserRequest request, CancellationToken cancellationToken)
         {
-            var userReponse = await _userRepository.GetAsync(request.Filters, cancellationToken, 10);
+            //var userReponse = await _userRepository.GetAsync(request.Filters, cancellationToken, 10);
+            var userReponse = await _userRepositoryDaaper.GetAsync(request.Filters, cancellationToken, 10);
 
             var response = _mapper.Map<ReturnDefault<UserReturnDefault>>(userReponse);
 
