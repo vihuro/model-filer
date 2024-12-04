@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ModelFilter.Api.Configuration;
 using ModelFilter.Application;
+using ModelFilter.Application.Utils;
 using ModelFilter.Persistence;
 using System.Text;
 
@@ -13,12 +14,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("85b72295-e585-44cf-b9b0-ff3ead4380f9"));
-
+var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["tokenSettings:Key"]));
 
 builder.Services.ConfigureSwaggerApp();
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
-builder.Services.ConfigureApplicationApp();
+builder.Services.ConfigureApplicationApp(builder.Configuration);
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,7 +34,6 @@ builder.Services.AddAuthentication(x =>
         ValidateIssuer = false,
         ValidateAudience = false,
         ClockSkew = TimeSpan.Zero
-
     };
 });
 

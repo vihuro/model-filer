@@ -19,6 +19,7 @@ namespace ModelFilter.Persistence
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepositoryDapper, UserRepositoryDapper>();
             services.AddScoped<IFilterDynamic, FilterDynamic>();
             services.AddScoped<IFilterInterpreterFactory, FilterInterpreterFactory>();
             services.AddScoped<ICustomNotification, NotificationService>();

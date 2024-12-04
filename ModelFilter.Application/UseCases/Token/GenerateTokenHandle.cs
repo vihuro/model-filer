@@ -1,5 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ModelFilter.Application.Interface;
+using ModelFilter.Application.Utils;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -8,9 +10,13 @@ namespace ModelFilter.Application.UseCases.Token
 {
     public class GenerateTokenHandle : IJwtService
     {
+        private readonly TokenSettings _settings;
+        public GenerateTokenHandle(IOptions<TokenSettings> options) 
+        {
+            _settings = options.Value;
+        }
         private string CreateAccessToken(string name, string userName, string userId)
         {
-            var key = Encoding.ASCII.GetBytes("85b72295-e585-44cf-b9b0-ff3ead4380f9");
             var tokenDescription = CreateTokenDescription(1);
 
             var roles = new string[]
@@ -52,9 +58,11 @@ namespace ModelFilter.Application.UseCases.Token
         {
             var tokenDescription = new SecurityTokenDescriptor();
 
-            var key = Encoding.ASCII.GetBytes("85b72295-e585-44cf-b9b0-ff3ead4380f9");
+            //var key = Encoding.ASCII.GetBytes("85b72295-e585-44cf-b9b0-ff3ead4380f9");
 
-            var expiration = DateTime.UtcNow.AddHours(hoursExpiration);
+            var key = Encoding.ASCII.GetBytes(_settings.Key);
+
+            var expiration = DateTime.UtcNow.AddHours(_settings.HoursExpiresRefreshToken);
             tokenDescription.Expires = expiration;
             tokenDescription.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
 
