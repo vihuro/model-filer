@@ -18,10 +18,10 @@ namespace ModelFilter.Application.UseCases.User.CreateUser
             _userRepository = userRepository ;
         }
 
-        public async Task<ReturnDefault<UserReturnDefault>> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+        public async Task<ReturnDefault<UserReturnDefault>> Handle(CreateUserRequest request, 
+                                                                   CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<UserModel>(request);
-
 
             EntityIsValid(entity);
 

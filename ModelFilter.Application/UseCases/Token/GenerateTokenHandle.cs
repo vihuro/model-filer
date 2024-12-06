@@ -11,13 +11,13 @@ namespace ModelFilter.Application.UseCases.Token
     public class GenerateTokenHandle : IJwtService
     {
         private readonly TokenSettings _settings;
-        public GenerateTokenHandle(IOptions<TokenSettings> options) 
+        public GenerateTokenHandle(IOptions<TokenSettings> options)
         {
             _settings = options.Value;
         }
         private string CreateAccessToken(string name, string userName, string userId)
         {
-            var tokenDescription = CreateTokenDescription(1);
+            var tokenDescription = CreateTokenDescription(_settings.HoursExpiresAccessToken);
 
             var roles = new string[]
             {
@@ -28,7 +28,7 @@ namespace ModelFilter.Application.UseCases.Token
 
             var listClaims = new List<Claim>
                 {
-                    //new Claim("name", name),
+                    new Claim("name", name),
                     new Claim("userName",userName),
                     new Claim("userId", userId),
                     new Claim("active", "true"),
@@ -41,7 +41,7 @@ namespace ModelFilter.Application.UseCases.Token
         }
         private string CreateRefreshToken()
         {
-            var tokenDescription = CreateTokenDescription(2);
+            var tokenDescription = CreateTokenDescription(_settings.HoursExpiresRefreshToken);
 
             return CreateToken(tokenDescription);
 
@@ -58,13 +58,12 @@ namespace ModelFilter.Application.UseCases.Token
         {
             var tokenDescription = new SecurityTokenDescriptor();
 
-            //var key = Encoding.ASCII.GetBytes("85b72295-e585-44cf-b9b0-ff3ead4380f9");
-
             var key = Encoding.ASCII.GetBytes(_settings.Key);
 
-            var expiration = DateTime.UtcNow.AddHours(_settings.HoursExpiresRefreshToken);
+            var expiration = DateTime.UtcNow.AddHours(hoursExpiration);
             tokenDescription.Expires = expiration;
-            tokenDescription.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
+            tokenDescription.SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                                                                         SecurityAlgorithms.HmacSha256Signature);
 
             return tokenDescription;
 

@@ -9,5 +9,12 @@ namespace ModelFilter.Persistence.Context
         { }
         public DbSet<UserModel> Users { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserModel>()
+                .HasIndex(x => new { x.Name, x.UserName })
+                .HasDatabaseName("IX_NAMES_ASCENDING");
+        }
+
     }
 }
