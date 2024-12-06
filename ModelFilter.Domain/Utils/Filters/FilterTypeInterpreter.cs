@@ -19,7 +19,7 @@ namespace ModelFilter.Domain.Utils.Filters
             var parameter = Expression.Parameter(dynamicType, dynamicType.Name.First().ToString());
             var property = Expression.Property(parameter, _filter.Field);
             var propertyInfo = (PropertyInfo)property.Member;
-            var value = Convert.ChangeType(_filter.Value.ToString(), propertyInfo.PropertyType);
+            var value = Convert.ChangeType(_filter.Value?.ToString(), propertyInfo.PropertyType);
 
             if(value is DateTime dateTimeValue)
             {

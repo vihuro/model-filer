@@ -1,8 +1,7 @@
-﻿using MediatR;
-using ModelFilter.Application.Utils;
+﻿using AutoMapper;
+using MediatR;
 using ModelFilter.Domain.Interface;
 using ModelFilter.Domain.Models;
-using ModelFilter.Domain.Utils;
 
 namespace ModelFilter.Application.UseCases.User.CreateUser
 {
@@ -12,20 +11,18 @@ namespace ModelFilter.Application.UseCases.User.CreateUser
 
         public CreateUserHandle(IMediator mediator,
                                 IUnitOfWork unitOfWork,
+                                ICustomNotification notification,
                                 IUserRepository userRepository,
-                                ICustomNotification notification) : base(mediator, unitOfWork, notification)
+                                IMapper mapper) : base(mediator, unitOfWork, notification, mapper)
         {
-            _userRepository = userRepository;
+            _userRepository = userRepository ;
         }
 
-        public async Task<ReturnDefault<UserReturnDefault>> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+        public async Task<ReturnDefault<UserReturnDefault>> Handle(CreateUserRequest request, 
+                                                                   CancellationToken cancellationToken)
         {
-            var entity = new UserModel
-            {
-                Password = request.Password,
-                UserName = request.UserName,
+            var entity = _mapper.Map<UserModel>(request);
 
-            };
             EntityIsValid(entity);
 
             if (!OperationIsValid()) return null;
@@ -33,6 +30,7 @@ namespace ModelFilter.Application.UseCases.User.CreateUser
             _userRepository.Insert(entity);
 
             await Commit(cancellationToken);
+
             var response = new ReturnDefault<UserReturnDefault>
             {
                 CurrentPage = 1,

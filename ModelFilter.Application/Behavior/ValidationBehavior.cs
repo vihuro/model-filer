@@ -23,7 +23,7 @@ namespace ModelFilter.Application.Behavior
 
             var response = new ReturnDefault<object>
             {
-                Erros = _notifications.GetNotifications().Select(x => x.Message).ToList(),
+                Errors = _notifications.GetNotifications().Select(x => x.Message).ToList(),
                 Sucess = false
             };
 

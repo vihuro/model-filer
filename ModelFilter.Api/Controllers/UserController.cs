@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ModelFilter.Api.Utils;
+using ModelFilter.Api.Utils.Authorize;
 using ModelFilter.Application.UseCases.User;
 using ModelFilter.Application.UseCases.User.CreateUser;
 using ModelFilter.Application.UseCases.User.GetUser;
@@ -50,21 +51,12 @@ namespace ModelFilter.Api.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
+        [ClaimsAuthorize("storage.sgb.write, storage.sgb.read")]
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> GetAllUsers(string? filters, CancellationToken cancellationToken)
         {
             var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
-            return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
-            //try
-            //{
-            //    var filterDefault = ConvertFilter.ConvertFilterDefault(filters);
-            //    return await CustomResponse(new GetUserRequest(filterDefault), cancellationToken);
 
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    return CustomReponseError(ex.Message);
-            //}
+            return await CustomResponse(new GetUserRequest(filterDefault), new UserReturnDefault(), cancellationToken);
         }
         /// <summary>
         /// Create a user!
@@ -76,15 +68,7 @@ namespace ModelFilter.Api.Controllers
         public async Task<ActionResult<ReturnDefault<UserReturnDefault>>> CreateUser([FromBody] CreateUserRequest request,
                                                                                      CancellationToken cancellationToken)
         {
-            try
-            {
-                return await CustomCreateResponse(request, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-
-                return CustomResponseError(ex.Message);
-            }
+            return await CustomCreateResponse(request, cancellationToken);
         }
     }
 }

@@ -8,6 +8,6 @@
         public int CurrentPage { get; set; }
         public int MaxPerPage { get; set; }
         public List<T> DataResult { get; set; }
-        public List<string> Erros { get; set; }
+        public List<string> Errors { get; set; }
     }
 }

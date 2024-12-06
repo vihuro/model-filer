@@ -22,10 +22,19 @@ namespace ModelFilter.Persistence.Repository
         {
             return await _appDbContext.Database.BeginTransactionAsync(cancellationToken);
         }
+        public async Task Commit(IDbContextTransaction transaction, CancellationToken cancellationToken)
+        {
+            await _appDbContext.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+
+            Dispose();
+        }
 
         public void Dispose()
         {
-            _appDbContext.Dispose();
+            _appDbContext?.Dispose();
+            
+            GC.SuppressFinalize(this);
         }
     }
 }

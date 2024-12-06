@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using ModelFilter.Domain.Models;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net;
 
@@ -33,7 +34,7 @@ namespace ModelFilter.Api.Configuration
             var response = httpContext.Response;
             response.ContentType = "application/json";
 
-            var statusCode = HttpStatusCode.BadRequest;
+            var statusCode = ex is ValidationException ? HttpStatusCode.BadRequest : HttpStatusCode.InternalServerError;
 
             var trace = new StackTrace(ex, true);
 
@@ -41,7 +42,7 @@ namespace ModelFilter.Api.Configuration
 
             var result = new ReturnDefault<object>()
             {
-                Erros = separetString,
+                Errors = separetString,
                 Sucess = false
             };
 
